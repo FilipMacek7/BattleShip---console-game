@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace GitHub1
 {
-    class Lod
+    class Pozice
     {
-        public Lod()
-        {
-
-        }
     }
 }
