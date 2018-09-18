@@ -10,6 +10,7 @@ namespace GitHub1
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Ahoj GitHube, můj nový kamaráde.");
         }
     }
 }
