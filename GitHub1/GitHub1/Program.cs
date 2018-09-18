@@ -18,10 +18,7 @@ namespace GitHub1
                 string vyber = Console.ReadLine();
                 if(vyber == "1"){
                    Console.WriteLine("Hráč 1 nasazuje jednotlivé lodě.");
-                    for(int i = 0;)
-                    {
-
-                    }
+                    
                 }
                 else if(vyber == "2"){
 }                  Semafor = false;

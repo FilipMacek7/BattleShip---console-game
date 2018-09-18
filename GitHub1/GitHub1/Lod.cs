@@ -8,10 +8,6 @@ namespace GitHub1
 {
     class Lod
     {
-        public string stav;
-        public Lod()
-        {
-
-        }
+        
     }
 }

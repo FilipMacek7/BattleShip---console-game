@@ -8,5 +8,6 @@ namespace GitHub1
 {
     class Mapa
     {
+        List<Pozice> Map = new List<Pozice>();
     }
 }
