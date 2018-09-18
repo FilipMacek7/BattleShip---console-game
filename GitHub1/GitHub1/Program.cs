@@ -11,9 +11,18 @@ namespace GitHub1
         static void Main(string[] args)
         {
            bool Semafor = true;
-           Console.WriteLine("Vítejte ve hře Loďě. Hra je určená pro dva hráče.");
+           Console.WriteLine("Vítejte ve hře Lodě. Hra je určená pro dva hráče.");
             while (Semafor){
-
+                Console.WriteLine("1)Nová hra");
+                Console.WriteLine("2)Ukončit hru");
+                string vyber = int.Parse(Console.ReadLine());
+                if(vyber == 1){
+                    while (true){
+                    
+                    }
+                }
+                if else(vyber == 2){
+}                  Semafor = false;
             }
 
         }
