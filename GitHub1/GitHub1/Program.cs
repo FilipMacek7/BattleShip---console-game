@@ -15,13 +15,13 @@ namespace GitHub1
             while (Semafor){
                 Console.WriteLine("1)Nová hra");
                 Console.WriteLine("2)Ukončit hru");
-                string vyber = int.Parse(Console.ReadLine());
-                if(vyber == 1){
+                string vyber = Console.ReadLine();
+                if(vyber == "1"){
                     while (true){
                     
                     }
                 }
-                if else(vyber == 2){
+                else if(vyber == "2"){
 }                  Semafor = false;
             }
 
