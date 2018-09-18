@@ -18,8 +18,6 @@ namespace GitHub1
                 string vyber = Console.ReadLine();
                 if(vyber == "1"){
                    Console.WriteLine("Hráč 1 nasazuje jednotlivé lodě.");
-                    string mapa = "";
-                    int ve
                     for(int i = 0;)
                     {
 

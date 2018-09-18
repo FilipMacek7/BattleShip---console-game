@@ -44,9 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lod.cs" />
+    <Compile Include="Mapa.cs" />
+    <Compile Include="Point.cs" />
     <Compile Include="Pozice.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stav.cs" />
+    <Compile Include="StavLodi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

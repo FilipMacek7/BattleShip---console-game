@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace GitHub1
 {
-    class Lod
+    class Mapa
     {
-        public string stav;
-        public Lod()
-        {
-
-        }
     }
 }
