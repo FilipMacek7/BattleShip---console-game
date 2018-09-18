@@ -10,7 +10,12 @@ namespace GitHub1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Ahoj GitHube, můj nový kamaráde.");
+           bool Semafor = true;
+           Console.WriteLine("Vítejte ve hře Loďě. Hra je určená pro dva hráče.");
+            while (Semafor){
+
+            }
+
         }
     }
 }
