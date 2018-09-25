@@ -10,8 +10,6 @@ namespace LodeGame
     {
         public int seaSize = 10;
         public Point[,] seaPoints = new Point[10, 10];
-        public string[,] seaPoints2 = new string[10,10];
-
         public void createSea()
         {
             Console.Write("  ");
@@ -27,36 +25,41 @@ namespace LodeGame
 
                 for (int y = 0; y < seaSize; y++)
                 {
+                    Point point = new Point();
+                    point.posX = x;
+                    point.posY = y;
+                    point.state = State.Empty;
 
-                    seaPoints[x, y] = new Point
-                    {
-                        posX = x,
-                        posY = y,
-                    };
-                    if(Point.state == State.Empty)
+                    seaPoints[x, y] = point;
+
+                    if (seaPoints[x, y].state == State.Empty)
                     {
                         Console.Write("o ");
                     }
-                    else if (Point.state == State.Placed)
+                    else if (seaPoints[x, y].state == State.Placed)
                     {
                         Console.Write("P ");
                     }
-                    else if (Point.state == State.Missed)
+                    else if (seaPoints[x, y].state == State.Missed)
                     {
                         Console.Write("M ");
                     }
-                    else if (Point.state == State.Hit)
+                    else if (seaPoints[x, y].state == State.Hit)
                     {
                         Console.Write("H ");
                     }
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine(seaPoints[7, 7].state);
         }
+        public void placeShips(int x, int y)
+        {
+            Point point = seaPoints[x, y];
+            point.state = State.Placed;
 
-        //public void placeShips(int x, int y)
-        //{
-        //    seaPoints2[x, y] = "o ";
-        //}
+            seaPoints[x, y] = point;
+            Console.WriteLine(seaPoints[7, 7].state);
+        }
     }
 }
