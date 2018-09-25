@@ -12,6 +12,21 @@ namespace LodeGame
         public Point[,] seaPoints = new Point[10, 10];
         public void createSea()
         {
+            for (int x = 0; x < seaSize; x++)
+            {
+                for (int y = 0; y < seaSize; y++)
+                {                    
+                    Point point = new Point();
+                    point.posX = x;
+                    point.posY = y;
+                    point.state = State.Empty;
+
+                    seaPoints[x, y] = point;
+                }
+            }
+        }
+        public void displaySea()
+        {
             Console.Write("  ");
             for (int i = 0; i < seaSize; i++)
             {
@@ -25,13 +40,6 @@ namespace LodeGame
 
                 for (int y = 0; y < seaSize; y++)
                 {
-                    Point point = new Point();
-                    point.posX = x;
-                    point.posY = y;
-                    point.state = State.Empty;
-
-                    seaPoints[x, y] = point;
-
                     if (seaPoints[x, y].state == State.Empty)
                     {
                         Console.Write("o ");
@@ -51,7 +59,6 @@ namespace LodeGame
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine(seaPoints[7, 7].state);
         }
         public void placeShips(int x, int y)
         {
@@ -59,7 +66,7 @@ namespace LodeGame
             point.state = State.Placed;
 
             seaPoints[x, y] = point;
-            Console.WriteLine(seaPoints[7, 7].state);
+            Console.Write(point.state);
         }
     }
 }

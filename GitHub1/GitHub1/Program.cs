@@ -30,16 +30,29 @@ namespace LodeGame
                         Console.Clear();
                         Sea seapl1 = new Sea();
                         seapl1.createSea();
+                        seapl1.displaySea();
                         Console.WriteLine("");
-                        Console.WriteLine("First player deploys two-block Submarine.");
+                        Console.WriteLine("First player deploys one-block Submarine.");
                         Console.WriteLine("");
                         Console.Write("Choose number x:");
                         int fplposx = int.Parse(Console.ReadLine());
                         Console.Write("Choose number y:");
                         int fplposy = int.Parse(Console.ReadLine());                       
                         seapl1.placeShips(fplposx, fplposy);
-                        //Console.Clear();
-                        seapl1.createSea();
+                        Console.Clear();
+
+                        seapl1.displaySea();
+                        Console.WriteLine("");
+                        Console.WriteLine("First player deploys two-block Destroyer.");
+                        Console.WriteLine("");
+                        Console.Write("Choose number x:");
+                        fplposx = int.Parse(Console.ReadLine());
+                        Console.Write("Choose number y:");
+                        fplposy = int.Parse(Console.ReadLine());
+                        seapl1.placeShips(fplposx, fplposy);
+                        Console.Clear();
+
+                        seapl1.displaySea();
 
                     }
                     else if (vyber == "2")
