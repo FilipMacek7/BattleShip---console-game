@@ -9,64 +9,89 @@ namespace LodeGame
     class Sea
     {
         public int seaSize = 10;
-        public Point[,] seaPoints = new Point[10, 10];
+        List<Point> seaPoints = new List<Point>();       
         public void createSea()
-        {
-            for (int x = 0; x < seaSize; x++)
+        {           
+            for (int x = 1; x < seaSize + 1; x++)
             {
-                for (int y = 0; y < seaSize; y++)
+                for (int y = 1; y < seaSize + 1; y++)
                 {                    
                     Point point = new Point();
                     point.posX = x;
                     point.posY = y;
-                    point.state = State.Empty;
-
-                    seaPoints[x, y] = point;
+                    seaPoints.Add(point);
                 }
             }
+        }
+        public void start()
+        {
+            int indexList = 10 * 1 - 10 + 1;
+            seaPoints[indexList].start = 1;
+            seaPoints.RemoveAt(0);
         }
         public void displaySea()
         {
             Console.Write("  ");
-            for (int i = 0; i < seaSize; i++)
+            for (int i = 1; i < seaSize + 1; i++)
             {
                 Console.Write(i + " ");
             }
             Console.WriteLine();
-            for (int x = 0; x < seaSize; x++)
+            for (int x = 1; x <= seaSize; x++)
             {
+                Console.ForegroundColor = ConsoleColor.Gray;
                 Console.Write(x);
                 Console.Write(" ");
-
-                for (int y = 0; y < seaSize; y++)
+                
+                for (int y = 1; y <= seaSize; y++)
                 {
-                    if (seaPoints[x, y].state == State.Empty)
+                    int indexList = 10 * x - 10 + y;
+                    Console.ForegroundColor = ConsoleColor.Blue;
+
+                    if (seaPoints[indexList].state == State.Empty)
                     {
                         Console.Write("o ");
                     }
-                    else if (seaPoints[x, y].state == State.Placed)
+                    else if (seaPoints[indexList].state == State.Placed)
                     {
                         Console.Write("P ");
                     }
-                    else if (seaPoints[x, y].state == State.Missed)
+                    else if (seaPoints[indexList].state == State.Missed)
                     {
                         Console.Write("M ");
                     }
-                    else if (seaPoints[x, y].state == State.Hit)
+                    else if (seaPoints[indexList].state == State.Hit)
                     {
                         Console.Write("H ");
                     }
+
+                    if (seaPoints[indexList].start == 1)
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        if (seaPoints[indexList].state == State.Empty)
+                        {
+                            Console.Write("P ");
+                        }
+                        Console.ResetColor();
+                    }
+
                 }
                 Console.WriteLine();
             }
         }
         public void placeShips(int x, int y)
         {
-            Point point = seaPoints[x, y];
+            int indexList = (10 * x - 10) + y;
+            Point point = seaPoints[indexList];
             point.state = State.Placed;
 
-            seaPoints[x, y] = point;
+            seaPoints[indexList] = point;
             Console.Write(point.state);
+        }
+        public void moveShips()
+        {
+
         }
     }
 }
