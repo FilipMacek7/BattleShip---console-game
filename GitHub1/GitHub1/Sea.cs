@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GitHub1;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,11 +11,12 @@ namespace LodeGame
     {
         public int seaSize = 10;
         List<Point> seaPoints = new List<Point>();       
+
         public void createSea()
         {           
-            for (int x = 1; x < seaSize + 1; x++)
+            for (int x = 0; x < seaSize + 1; x++)
             {
-                for (int y = 1; y < seaSize + 1; y++)
+                for (int y = 0; y < seaSize + 1; y++)
                 {                    
                     Point point = new Point();
                     point.posX = x;
@@ -22,12 +24,11 @@ namespace LodeGame
                     seaPoints.Add(point);
                 }
             }
-        }
-        public void start()
-        {
             int indexList = 10 * 1 - 10 + 1;
-            seaPoints[indexList].start = 1;
+            seaPoints[indexList].marked = 1;
             seaPoints.RemoveAt(0);
+
+
         }
         public void displaySea()
         {
@@ -37,16 +38,15 @@ namespace LodeGame
                 Console.Write(i + " ");
             }
             Console.WriteLine();
-            for (int x = 1; x <= seaSize; x++)
+            for (int x = 1; x < seaSize + 1; x++)
             {
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.Write(x);
                 Console.Write(" ");
-                
-                for (int y = 1; y <= seaSize; y++)
+                for (int y = 0; y < seaSize; y++)
                 {
                     int indexList = 10 * x - 10 + y;
-                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.ForegroundColor = ConsoleColor.Cyan;
 
                     if (seaPoints[indexList].state == State.Empty)
                     {
@@ -65,7 +65,7 @@ namespace LodeGame
                         Console.Write("H ");
                     }
 
-                    if (seaPoints[indexList].start == 1)
+                    if (seaPoints[indexList].marked == 1)
                     {
                         Console.BackgroundColor = ConsoleColor.White;
                         Console.ForegroundColor = ConsoleColor.Black;
@@ -75,7 +75,7 @@ namespace LodeGame
                         }
                         Console.ResetColor();
                     }
-
+                    Console.ResetColor();
                 }
                 Console.WriteLine();
             }
@@ -89,9 +89,24 @@ namespace LodeGame
             seaPoints[indexList] = point;
             Console.Write(point.state);
         }
-        public void moveShips()
+        public void moveShips(char move)
         {
-
+            Mark mark1 = new Mark();
+           
+            if(move == 'd')
+            {
+                int indexList = (10 * mark1.markPosX - 10) + mark1.markPosY;               
+                seaPoints[indexList].marked = 0;
+                Console.WriteLine(indexList);
+                indexList = (10 * mark1.markPosX + 1 - 10) + mark1.markPosY;       
+                
+                seaPoints[indexList].marked = 1;
+                Console.WriteLine(indexList);
+                //Console.Clear();
+                displaySea();
+            }
+            
+            
         }
     }
 }

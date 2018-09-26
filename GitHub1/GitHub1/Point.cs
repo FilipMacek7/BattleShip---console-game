@@ -11,7 +11,7 @@ namespace LodeGame
         public int posX { get; set; }
         public int posY { get; set; }
         public State state { get; set; }
-        public int start = 0;
+        public int marked = 0;
 
     }
     enum State
