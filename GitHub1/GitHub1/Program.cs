@@ -20,6 +20,9 @@ namespace LodeGame
             }
 
             bool Semafor = true;
+            bool pl1placing = true;
+            bool pl2placing = true;
+            bool Game = true;
             while (Semafor)
             {
                 menu();
@@ -34,50 +37,95 @@ namespace LodeGame
                             seapl1.createSea();
                             seapl1.displaySea();
                             Console.WriteLine("");
-                            Console.WriteLine("Player 1 deploys one-block Submarine.");
+                            Console.WriteLine("Press ENTER to deploy one-block Submarine Player 1.");
                             Console.WriteLine("");
-                            while (seapl1.playerPlaced == true)
+                            while (pl1placing)
                             {
-                                ConsoleKeyInfo input = Console.ReadKey();
-                                char move = input.KeyChar;
-                                seapl1.moveShips(move);
-
+                                while (seapl1.playerPlaced == true)
+                                {
+                                    ConsoleKeyInfo input = Console.ReadKey();
+                                    char move = input.KeyChar;
+                                    seapl1.moveShips(move);
+                                    Console.Clear();
+                                    seapl1.displaySea();
+                                }                              
+                                Console.WriteLine("Player 1 do you want to set ships on these positions?");
+                                Console.WriteLine("1) Yes");
+                                Console.WriteLine("2) No");
+                                ConsoleKeyInfo choice = Console.ReadKey();
+                                if (choice.KeyChar == '1')
+                                {
+                                    pl1placing = false;
+                                }
+                                else if(choice.KeyChar == '2')
+                                {
+                                    seapl1.playerPlaced = true;
+                                    seapl1.clearSea();
+                                    Console.Clear();
+                                    seapl1.displaySea();
+                                    Console.WriteLine("Select one more time.");
+                                }
                             }
+                            
                             Console.Clear();
                             Sea seapl2 = new Sea();
                             seapl2.createSea();
                             seapl2.displaySea();
                             Console.WriteLine("");
-                            Console.WriteLine("Player 2 deploys one-block Submarine.");
+                            Console.WriteLine("Press ENTER to deploy one-block Submarine Player 2.");
                             Console.WriteLine("");
                             seapl2.playerPlaced = true;
-                            while (seapl2.playerPlaced == true)
+                            while (pl2placing)
                             {
-                                ConsoleKeyInfo input = Console.ReadKey();
-                                char move = input.KeyChar;
-                                seapl2.moveShips(move);
-                            }
-                            while (Sea.Game)
-                            {                                
-                                Console.Clear();
-                                Console.WriteLine("Game has started. Good luck!");
-                                while (Sea.playerTurn == true)
+                                while (seapl2.playerPlaced == true)
                                 {
-                                    seapl1.displayGameSea();
-                                    Console.WriteLine("Player 1's turn: ");
-                                    ConsoleKeyInfo input = Console.ReadKey();
-                                    char move = input.KeyChar;
-                                    seapl1.moveShips(move);
-                                    Console.Clear();
-                                }
-                                while (Sea.playerTurn == false)
-                                {
-                                    seapl2.displayGameSea();
-                                    Console.WriteLine("Player 2's turn: ");
                                     ConsoleKeyInfo input = Console.ReadKey();
                                     char move = input.KeyChar;
                                     seapl2.moveShips(move);
                                     Console.Clear();
+                                    seapl2.displaySea();
+                                }
+                                Console.WriteLine("Player 2 do you want to set ships on these positions?");
+                                Console.WriteLine("1) Yes");
+                                Console.WriteLine("2) No");
+                                ConsoleKeyInfo choice = Console.ReadKey();
+                                if (choice.KeyChar == '1')
+                                {
+                                    pl2placing = false;
+                                }
+                                else if (choice.KeyChar == '2')
+                                {
+                                    seapl2.playerPlaced = true;
+                                    seapl2.clearSea();
+                                    Console.Clear();
+                                    seapl2.displaySea();
+                                    Console.WriteLine("Select one more time.");
+                                }
+                            }
+
+                            while (Game)
+                            {
+                                Console.Clear();                              
+                                seapl1.displayGameSea();                                                            
+                                while (Sea.playerTurn == true)
+                                {
+                                    Console.Clear();
+                                    seapl1.displayGameSea();
+                                    ConsoleKeyInfo input = Console.ReadKey();
+                                    char move = input.KeyChar;
+                                    seapl1.moveGame(move);
+                                    seapl1.displayGameSea();
+                                    Console.WriteLine("Player 1's turn. ");
+                                }                               
+                                while (Sea.playerTurn == false)
+                                {
+                                    Console.Clear();
+                                    seapl2.displayGameSea();
+                                    ConsoleKeyInfo input = Console.ReadKey();
+                                    char move = input.KeyChar;
+                                    seapl1.moveGame(move);
+                                    seapl2.displayGameSea();
+                                    Console.WriteLine("Player 2's turn. ");
                                 }
                             }
 
