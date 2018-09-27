@@ -92,7 +92,7 @@ namespace LodeGame
         }
         public void moveShips(char move)
         {
-            if (move == 'w')
+            if (move == 'a')
             {
                 int indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 0;
@@ -107,7 +107,7 @@ namespace LodeGame
                 Console.WriteLine("y:" + mark1.markPosY);
                 Console.WriteLine(indexList);
             }
-            if (move == 'a')
+            else if (move == 'w')
             {
                 int indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 0;
@@ -122,7 +122,7 @@ namespace LodeGame
                 Console.WriteLine("y:" + mark1.markPosY);
                 Console.WriteLine(indexList);
             }
-            if (move == 's')
+            else if (move == 'd')
             {
                 int indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 0;
@@ -137,7 +137,7 @@ namespace LodeGame
                 Console.WriteLine("y:" + mark1.markPosY);
                 Console.WriteLine(indexList);
             }
-            if (move == 'd')
+            else if (move == 's')
             {
                 int indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 0;
@@ -214,6 +214,18 @@ namespace LodeGame
                         else if (seaPoints[indexList].state == State.Placed)
                         {
                             Console.Write("o ");
+                        }
+                        else if (seaPoints[indexList].state == State.Missed)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("M ");
+                            Console.ResetColor();
+                        }
+                        else if (seaPoints[indexList].state == State.Hit)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write("H ");
+                            Console.ResetColor();
                         }
                         Console.ResetColor();
                     }
@@ -315,11 +327,11 @@ namespace LodeGame
                 {
                     if (seaPoints[indexList].state == State.Placed)
                     {
-                        point.state = State.Hit;
+                        seaPoints[indexList].state = State.Hit;
                     }
                     else
                     {
-                        point.state = State.Missed;
+                        seaPoints[indexList].state = State.Missed;
                     }
                     playerTurn = false;
                 }
@@ -328,11 +340,11 @@ namespace LodeGame
                    
                     if (seaPoints[indexList].state == State.Placed)
                     {
-                        point.state = State.Hit;
+                        seaPoints[indexList].state = State.Hit;
                     }
                     else
                     {
-                        point.state = State.Missed;
+                        seaPoints[indexList].state = State.Missed;
                     }
                     playerTurn = true;
                 }
