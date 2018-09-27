@@ -10,6 +10,7 @@ namespace LodeGame
     {       
         public ShipType Ships { get; set;}      
         public ShipState State { get; set;}
+        public int position { get; set; }
     }
 
     enum ShipType

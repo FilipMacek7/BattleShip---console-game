@@ -8,7 +8,33 @@ namespace GitHub1
 {
     class Mark
     {
-        public int markPosX{ get; set; }
-        public int markPosY { get; set; }
+        public int _markPos = 0; 
+        public int markPosX
+        {
+            get{
+		        return _markPos;
+	        }
+            set{
+		        if (value < 0 || value >9){
+			        return;
+		        }
+                _markPos = value;
+	        }
+        }
+        public int markPosY
+        {
+            get
+            {
+                return _markPos;
+            }
+            set
+            {
+                if (value < 0 || value > 9)
+                {
+                    return;
+                }
+                _markPos = value;
+            }
+        }
     }
 }

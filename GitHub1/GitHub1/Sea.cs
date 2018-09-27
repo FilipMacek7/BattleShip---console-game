@@ -9,104 +9,337 @@ namespace LodeGame
 {
     class Sea
     {
-        public int seaSize = 10;
-        List<Point> seaPoints = new List<Point>();       
+        int seaSize = 10;
+        List<Point> seaPoints = new List<Point>();
+        Mark mark1 = new Mark();
+        public bool playerPlaced = true;
+        int placeCounter = 0;
+        public static bool Game = true;
+        public static bool playerTurn = true;
 
         public void createSea()
-        {           
-            for (int x = 0; x < seaSize + 1; x++)
+        {
+            for (int x = 0; x < 20; x++)
             {
-                for (int y = 0; y < seaSize + 1; y++)
-                {                    
+                for (int y = 0; y < 20; y++)
+                {
                     Point point = new Point();
                     point.posX = x;
                     point.posY = y;
                     seaPoints.Add(point);
                 }
             }
-            int indexList = 10 * 1 - 10 + 1;
-            seaPoints[indexList].marked = 1;
-            seaPoints.RemoveAt(0);
-
-
+            seaPoints[0].marked = 1;
         }
         public void displaySea()
         {
             Console.Write("  ");
-            for (int i = 1; i < seaSize + 1; i++)
+            for (int i = 0; i < seaSize; i++)
             {
                 Console.Write(i + " ");
             }
             Console.WriteLine();
-            for (int x = 1; x < seaSize + 1; x++)
+            for (int x = 0; x < seaSize; x++)
             {
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.Write(x);
                 Console.Write(" ");
                 for (int y = 0; y < seaSize; y++)
                 {
-                    int indexList = 10 * x - 10 + y;
+
+                    int indexList = seaSize * y + x;
                     Console.ForegroundColor = ConsoleColor.Cyan;
-
-                    if (seaPoints[indexList].state == State.Empty)
-                    {
-                        Console.Write("o ");
-                    }
-                    else if (seaPoints[indexList].state == State.Placed)
-                    {
-                        Console.Write("P ");
-                    }
-                    else if (seaPoints[indexList].state == State.Missed)
-                    {
-                        Console.Write("M ");
-                    }
-                    else if (seaPoints[indexList].state == State.Hit)
-                    {
-                        Console.Write("H ");
-                    }
-
                     if (seaPoints[indexList].marked == 1)
                     {
                         Console.BackgroundColor = ConsoleColor.White;
                         Console.ForegroundColor = ConsoleColor.Black;
                         if (seaPoints[indexList].state == State.Empty)
                         {
+                            Console.Write("o ");
+                        }
+                        else if (seaPoints[indexList].state == State.Placed)
+                        {
                             Console.Write("P ");
                         }
                         Console.ResetColor();
                     }
+                    else if (seaPoints[indexList].marked == 0)
+                    {
+                        if (seaPoints[indexList].state == State.Empty)
+                        {
+                            Console.Write("o ");
+                        }
+                        else if (seaPoints[indexList].state == State.Placed)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.Write("P ");
+                            Console.ResetColor();
+                        }
+                        else if (seaPoints[indexList].state == State.Missed)
+                        {
+                            Console.Write("M ");
+                        }
+                        else if (seaPoints[indexList].state == State.Hit)
+                        {
+                            Console.Write("H ");
+                        }
+                    }
+
                     Console.ResetColor();
                 }
                 Console.WriteLine();
             }
         }
-        public void placeShips(int x, int y)
-        {
-            int indexList = (10 * x - 10) + y;
-            Point point = seaPoints[indexList];
-            point.state = State.Placed;
-
-            seaPoints[indexList] = point;
-            Console.Write(point.state);
-        }
         public void moveShips(char move)
         {
-            Mark mark1 = new Mark();
-           
-            if(move == 'd')
+            if (move == 'w')
             {
-                int indexList = (10 * mark1.markPosX - 10) + mark1.markPosY;               
+                int indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 0;
-                Console.WriteLine(indexList);
-                indexList = (10 * mark1.markPosX + 1 - 10) + mark1.markPosY;       
-                
+
+                mark1.markPosY--;
+                indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 1;
-                Console.WriteLine(indexList);
-                //Console.Clear();
+
+                Console.Clear();
                 displaySea();
+                Console.WriteLine("x:" + mark1.markPosX);
+                Console.WriteLine("y:" + mark1.markPosY);
+                Console.WriteLine(indexList);
             }
-            
-            
+            if (move == 'a')
+            {
+                int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                seaPoints[indexList].marked = 0;
+
+                mark1.markPosX--;
+                indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                seaPoints[indexList].marked = 1;
+
+                Console.Clear();
+                displaySea();
+                Console.WriteLine("x:" + mark1.markPosX);
+                Console.WriteLine("y:" + mark1.markPosY);
+                Console.WriteLine(indexList);
+            }
+            if (move == 's')
+            {
+                int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                seaPoints[indexList].marked = 0;
+
+                mark1.markPosY++;
+                indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                seaPoints[indexList].marked = 1;
+
+                Console.Clear();
+                displaySea();
+                Console.WriteLine("x:" + mark1.markPosX);
+                Console.WriteLine("y:" + mark1.markPosY);
+                Console.WriteLine(indexList);
+            }
+            if (move == 'd')
+            {
+                int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                seaPoints[indexList].marked = 0;
+
+                mark1.markPosX++;
+                indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                seaPoints[indexList].marked = 1;
+
+                Console.Clear();
+                displaySea();
+                Console.WriteLine("x:" + mark1.markPosX);
+                Console.WriteLine("y:" + mark1.markPosY);
+                Console.WriteLine(indexList);
+            }
+            else if (move == (char)13)
+            {
+                int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+
+                if(seaPoints[indexList].state == State.Empty)
+                {
+                    Point point = seaPoints[indexList];
+                    point.state = State.Placed;                  
+                    seaPoints[indexList].marked = 1;
+                    seaPoints[indexList] = point;
+
+                    Ship submarine = new Ship();
+                    submarine.position = indexList;
+                    placeCounter++;
+                   
+                    if (placeCounter == 3)
+                    {
+                        playerPlaced = false;
+                        placeCounter = 0;
+                        mark1.markPosX = 0;
+                        mark1.markPosY = 0;
+                    }
+                }
+                else if(seaPoints[indexList].state == State.Placed)
+                {
+                    Console.Clear();
+                    displaySea();
+                    Console.WriteLine("Ship already exists here.");
+                }
+                
+            }
+
+        }
+        public void displayGameSea()
+        {
+            Console.Write("  ");
+            for (int i = 0; i < seaSize; i++)
+            {
+                Console.Write(i + " ");
+            }
+            Console.WriteLine();
+            for (int x = 0; x < seaSize; x++)
+            {
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write(x);
+                Console.Write(" ");
+                for (int y = 0; y < seaSize; y++)
+                {
+
+                    int indexList = seaSize * y + x;
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    if (seaPoints[indexList].marked == 1)
+                    {
+                        Console.BackgroundColor = ConsoleColor.White;
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        if (seaPoints[indexList].state == State.Empty)
+                        {
+                            Console.Write("o ");
+                        }
+                        else if (seaPoints[indexList].state == State.Placed)
+                        {
+                            Console.Write("o ");
+                        }
+                        Console.ResetColor();
+                    }
+                    else if (seaPoints[indexList].marked == 0)
+                    {
+                        if (seaPoints[indexList].state == State.Empty)
+                        {
+                            Console.Write("o ");
+                        }
+                        else if (seaPoints[indexList].state == State.Placed)
+                        {
+                            Console.Write("o ");
+                        }
+                        else if (seaPoints[indexList].state == State.Missed)
+                        {
+                            Console.Write("M ");
+                        }
+                        else if (seaPoints[indexList].state == State.Hit)
+                        {
+                            Console.Write("H ");
+                        }
+                    }
+
+                    Console.ResetColor();
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("x:" + mark1.markPosX);
+            Console.WriteLine("y:" + mark1.markPosY);
+        }
+
+        public void moveGame(char move)
+        {
+            if (move == 'w')
+            {
+                int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                seaPoints[indexList].marked = 0;
+
+                mark1.markPosY--;
+                indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                seaPoints[indexList].marked = 1;
+
+                Console.Clear();
+                displayGameSea();
+                Console.WriteLine("x:" + mark1.markPosX);
+                Console.WriteLine("y:" + mark1.markPosY);
+                Console.WriteLine(indexList);
+            }
+            else if (move == 'a')
+            {
+                int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                seaPoints[indexList].marked = 0;
+
+                mark1.markPosX--;
+                indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                seaPoints[indexList].marked = 1;
+
+                Console.Clear();
+                displayGameSea();
+                Console.WriteLine("x:" + mark1.markPosX);
+                Console.WriteLine("y:" + mark1.markPosY);
+                Console.WriteLine(indexList);
+            }
+            else if (move == 's')
+            {
+                int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                seaPoints[indexList].marked = 0;
+
+                mark1.markPosY++;
+                indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                seaPoints[indexList].marked = 1;
+
+                Console.Clear();
+                displayGameSea();
+                Console.WriteLine("x:" + mark1.markPosX);
+                Console.WriteLine("y:" + mark1.markPosY);
+                Console.WriteLine(indexList);
+            }
+            else if (move == 'd')
+            {
+                int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                seaPoints[indexList].marked = 0;
+
+                mark1.markPosX++;
+                indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                seaPoints[indexList].marked = 1;
+
+                Console.Clear();
+                displayGameSea();
+                Console.WriteLine("x:" + mark1.markPosX);
+                Console.WriteLine("y:" + mark1.markPosY);
+                Console.WriteLine(indexList);
+            }
+            else if (move == (char)13)
+            {
+                int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                Point point = seaPoints[indexList];
+                if (playerTurn == true)
+                {
+                    if (seaPoints[indexList].state == State.Placed)
+                    {
+                        point.state = State.Hit;
+                    }
+                    else
+                    {
+                        point.state = State.Missed;
+                    }
+                    playerTurn = false;
+                }
+                else if (playerTurn == false)
+                {
+                   
+                    if (seaPoints[indexList].state == State.Placed)
+                    {
+                        point.state = State.Hit;
+                    }
+                    else
+                    {
+                        point.state = State.Missed;
+                    }
+                    playerTurn = true;
+                }
+                seaPoints[indexList] = point;
+
+            }
+
         }
     }
 }
