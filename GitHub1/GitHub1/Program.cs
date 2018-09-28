@@ -21,8 +21,7 @@ namespace LodeGame
 
             bool Semafor = true;
             bool pl1placing = true;
-            bool pl2placing = true;
-            bool Game = true;
+            bool pl2placing = true;            
             while (Semafor)
             {
                 menu();
@@ -103,30 +102,28 @@ namespace LodeGame
                                 }
                             }
 
-                            while (Game)
-                            {
-                                Console.Clear();                              
-                                seapl1.displayGameSea();                                                            
+                            while (Sea.Game)
+                            {                                          
                                 while (Sea.playerTurn == true)
                                 {
                                     Console.Clear();
-                                    seapl1.displayGameSea();
+                                    seapl2.displayGameSea();
                                     Console.WriteLine("Player 1's turn. ");
                                     ConsoleKeyInfo input = Console.ReadKey();
                                     char move = input.KeyChar;
-                                    seapl1.moveGame(move);
-                                    seapl1.displayGameSea();
+                                    seapl2.moveGame(move);
+                                    Sea.playerHasWon();
 
                                 }                               
                                 while (Sea.playerTurn == false)
                                 {
                                     Console.Clear();
-                                    seapl2.displayGameSea();
+                                    seapl1.displayGameSea();
                                     Console.WriteLine("Player 2's turn. ");
                                     ConsoleKeyInfo input = Console.ReadKey();
                                     char move = input.KeyChar;
-                                    seapl2.moveGame(move);
-                                    seapl2.displayGameSea();
+                                    seapl1.moveGame(move);
+                                    Sea.playerHasWon();
                                 }
                             }
 

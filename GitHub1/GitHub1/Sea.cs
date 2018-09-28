@@ -14,13 +14,18 @@ namespace LodeGame
         Mark mark1 = new Mark();
         public bool playerPlaced = true;
         int placeCounter = 0;
-        public static bool playerTurn = true;
+        public static bool? playerTurn = true;
+        static int hitCounter = 0;
+        static int pl1Points = 0;
+        static int pl2Points = 0;
+        static int EndGameCounter = 0;
+        public static bool Game = true;
 
         public void createSea()
         {
-            for (int x = 0; x < 20; x++)
+            for (int x = 0; x < seaSize; x++)
             {
-                for (int y = 0; y < 20; y++)
+                for (int y = 0; y < seaSize; y++)
                 {
                     Point point = new Point();
                     point.posX = x;
@@ -32,9 +37,9 @@ namespace LodeGame
         }
         public void clearSea()
         {
-            for (int x = 0; x < 20; x++)
+            for (int x = 0; x < seaSize; x++)
             {
-                for (int y = 0; y < 20; y++)
+                for (int y = 0; y < seaSize; y++)
                 {
                     int indexList = seaSize * y + x;
                     seaPoints[indexList].state = State.Empty;
@@ -95,7 +100,7 @@ namespace LodeGame
         }
         public void moveShips(char move)
         {
-            if (move == 'w')
+            if (move == 'a')
             {
                 int indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 0;
@@ -104,7 +109,7 @@ namespace LodeGame
                 indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 1;
             }
-            else if (move == 'a')
+            else if (move == 'w')
             {
                 int indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 0;
@@ -113,7 +118,7 @@ namespace LodeGame
                 indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 1;
             }
-            else if (move == 's')
+            else if (move == 'd')
             {
                 int indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 0;
@@ -122,7 +127,7 @@ namespace LodeGame
                 indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 1;
             }
-            else if (move == 'd')
+            else if (move == 's')
             {
                 int indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 0;
@@ -142,10 +147,10 @@ namespace LodeGame
                     seaPoints[indexList].marked = 1;
                     seaPoints[indexList] = point;
 
-                    Ship submarine = new Ship();
-                    submarine.position = indexList;
+                    //Ship submarine = new Ship();
+                    //submarine.position = indexList;
+                    EndGameCounter++;
                     placeCounter++;
-                   
                     if (placeCounter == 3)
                     {
                         playerPlaced = false;
@@ -157,7 +162,6 @@ namespace LodeGame
                     }
                 }               
             }
-
         }
         public void displayGameSea()
         {
@@ -236,7 +240,7 @@ namespace LodeGame
 
         public void moveGame(char move)
         {
-            if (move == 'w')
+            if (move == 'a')
             {
                 int indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 0;
@@ -245,7 +249,7 @@ namespace LodeGame
                 indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 1;
             }
-            else if (move == 'a')
+            else if (move == 'w')
             {
                 int indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 0;
@@ -254,7 +258,7 @@ namespace LodeGame
                 indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 1;
             }
-            else if (move == 's')
+            else if (move == 'd')
             {
                 int indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 0;
@@ -263,7 +267,7 @@ namespace LodeGame
                 indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 1;
             }
-            else if (move == 'd')
+            else if (move == 's')
             {
                 int indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 seaPoints[indexList].marked = 0;
@@ -283,12 +287,16 @@ namespace LodeGame
                     {
                         seaPoints[indexList].state = State.Hit;
                         Console.WriteLine("You have hit enemy's ship.");
+                        pl1Points++;
                     }
-                    else
+                    else if (seaPoints[indexList].state == State.Empty)
                     {
                         seaPoints[indexList].state = State.Missed;
                         Console.WriteLine("You have missed enemy's ship.");
-                    }                   
+                    }  
+                    else{
+                        Console.WriteLine("You have already shot here.");
+                    }
                     Console.WriteLine("Press any key to end your turn.");
                     ConsoleKeyInfo endTurn = Console.ReadKey();
                     if(endTurn.KeyChar == 'k')
@@ -298,6 +306,10 @@ namespace LodeGame
                     {
                         playerTurn = false;
                     }
+                    seaPoints[indexList].marked = 0;
+                    mark1.markPosX = 0;
+                    mark1.markPosY = 0;
+                    seaPoints[0].marked = 1;
                 }
                 else if (playerTurn == false)
                 {
@@ -305,6 +317,7 @@ namespace LodeGame
                     {
                         seaPoints[indexList].state = State.Hit;
                         Console.WriteLine("You have hit enemy's ship.");
+                        pl2Points++;
                     }
                     else
                     {
@@ -315,16 +328,35 @@ namespace LodeGame
                     ConsoleKeyInfo endTurn = Console.ReadKey();
                     if (endTurn.KeyChar == 'k')
                     {
-                        playerTurn = false;
+                        playerTurn = true;
                     }
                     {
-                        playerTurn = false;
+                        playerTurn = true;
                     }
+                    seaPoints[indexList].marked = 0;
+                    mark1.markPosX = 0;
+                    mark1.markPosY = 0;
+                    seaPoints[0].marked = 1;
                 }
                 seaPoints[indexList] = point;
-
             }
+        }
 
+        public static void playerHasWon(){
+            Console.WriteLine(pl1Points);
+            Console.WriteLine(pl2Points);
+            if (pl1Points == EndGameCounter/2){     
+                //Console.Clear();
+                //Game = false;
+                //playerTurn = null;
+                Console.WriteLine("Congratulations! Player 1 has won the game.");
+            }
+            else if(pl2Points == EndGameCounter/2){
+                //Console.Clear();
+                //Game = false;
+                //playerTurn = null;
+                Console.WriteLine("Congratulations! Player 2 has won the game.");
+            }          
         }
     }
 }
