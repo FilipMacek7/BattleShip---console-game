@@ -274,6 +274,7 @@ namespace LodeGame
             }
             if (move == (char)13)
             {
+                Console.Clear();
                 int indexList = seaSize * mark1.markPosY + mark1.markPosX;
                 Point point = seaPoints[indexList];
                 if (playerTurn == true)
@@ -287,13 +288,13 @@ namespace LodeGame
                     {
                         seaPoints[indexList].state = State.Missed;
                         Console.WriteLine("You have missed enemy's ship.");
-                    }
-                    Console.WriteLine("For ending your turn press any key.");
-                    if (move == 'k')
+                    }                   
+                    Console.WriteLine("Press any key to end your turn.");
+                    ConsoleKeyInfo endTurn = Console.ReadKey();
+                    if(endTurn.KeyChar == 'k')
                     {
                         playerTurn = false;
                     }
-                    else
                     {
                         playerTurn = false;
                     }
@@ -310,16 +311,15 @@ namespace LodeGame
                         seaPoints[indexList].state = State.Missed;
                         Console.WriteLine("You have missed enemy's ship.");
                     }
-                    Console.WriteLine("For ending your turn press any key.");
-                    if (move == 'k')
+                    Console.WriteLine("Press any key to end your turn.");
+                    ConsoleKeyInfo endTurn = Console.ReadKey();
+                    if (endTurn.KeyChar == 'k')
                     {
                         playerTurn = false;
                     }
-                    else
                     {
                         playerTurn = false;
                     }
-
                 }
                 seaPoints[indexList] = point;
 

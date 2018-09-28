@@ -111,21 +111,22 @@ namespace LodeGame
                                 {
                                     Console.Clear();
                                     seapl1.displayGameSea();
+                                    Console.WriteLine("Player 1's turn. ");
                                     ConsoleKeyInfo input = Console.ReadKey();
                                     char move = input.KeyChar;
                                     seapl1.moveGame(move);
                                     seapl1.displayGameSea();
-                                    Console.WriteLine("Player 1's turn. ");
+
                                 }                               
                                 while (Sea.playerTurn == false)
                                 {
                                     Console.Clear();
                                     seapl2.displayGameSea();
+                                    Console.WriteLine("Player 2's turn. ");
                                     ConsoleKeyInfo input = Console.ReadKey();
                                     char move = input.KeyChar;
-                                    seapl1.moveGame(move);
+                                    seapl2.moveGame(move);
                                     seapl2.displayGameSea();
-                                    Console.WriteLine("Player 2's turn. ");
                                 }
                             }
 
