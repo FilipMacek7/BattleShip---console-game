@@ -23,7 +23,6 @@ namespace LodeGame
     enum ShipState
     {
         Function,
-        Hit,
         Destroyed,
     }
 }

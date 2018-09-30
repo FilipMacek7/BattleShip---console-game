@@ -102,7 +102,7 @@ namespace LodeGame
                                 }
                             }
 
-                            while (Sea.Game)
+                            while (true)
                             {                                          
                                 while (Sea.playerTurn == true)
                                 {
@@ -112,7 +112,7 @@ namespace LodeGame
                                     ConsoleKeyInfo input = Console.ReadKey();
                                     char move = input.KeyChar;
                                     seapl2.moveGame(move);
-                                    Sea.playerHasWon();
+                                    seapl1.playerHasWon();
 
                                 }                               
                                 while (Sea.playerTurn == false)
@@ -123,7 +123,7 @@ namespace LodeGame
                                     ConsoleKeyInfo input = Console.ReadKey();
                                     char move = input.KeyChar;
                                     seapl1.moveGame(move);
-                                    Sea.playerHasWon();
+                                    seapl2.playerHasWon();
                                 }
                             }
 

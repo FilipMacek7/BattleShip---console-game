@@ -14,18 +14,17 @@ namespace LodeGame
         Mark mark1 = new Mark();
         public bool playerPlaced = true;
         int placeCounter = 0;
+        int shipTypeCounter = 0;
         public static bool? playerTurn = true;
-        static int hitCounter = 0;
         static int pl1Points = 0;
         static int pl2Points = 0;
-        static int EndGameCounter = 0;
-        public static bool Game = true;
-
+        static int shipSizeCounter = 0;
+        int rotateCounter = 0;
         public void createSea()
         {
-            for (int x = 0; x < seaSize; x++)
+            for (int x = 0; x < 20; x++)
             {
-                for (int y = 0; y < seaSize; y++)
+                for (int y = 0; y < 20; y++)
                 {
                     Point point = new Point();
                     point.posX = x;
@@ -37,9 +36,9 @@ namespace LodeGame
         }
         public void clearSea()
         {
-            for (int x = 0; x < seaSize; x++)
+            for (int x = 0; x < 20; x++)
             {
-                for (int y = 0; y < seaSize; y++)
+                for (int y = 0; y < 20; y++)
                 {
                     int indexList = seaSize * y + x;
                     seaPoints[indexList].state = State.Empty;
@@ -102,39 +101,476 @@ namespace LodeGame
         {
             if (move == 'a')
             {
-                int indexList = seaSize * mark1.markPosY + mark1.markPosX;
-                seaPoints[indexList].marked = 0;
+                if (shipTypeCounter == 0)
+                {
+                    int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                    seaPoints[indexList].marked = 0;
 
-                mark1.markPosY--;
-                indexList = seaSize * mark1.markPosY + mark1.markPosX;
-                seaPoints[indexList].marked = 1;
+                    mark1.markPosY--;
+                    indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                    seaPoints[indexList].marked = 1;
+                }
+                else if (shipTypeCounter == 1)
+                {
+                    if (rotateCounter == 0 || rotateCounter == 4)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosY--;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 1)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosY--;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;                        
+                        indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 2)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosY--;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 3)
+                    {
+                        int indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        mark1.markPosY--;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                }
+                else if (shipTypeCounter == 2)
+                {
+                    if (rotateCounter == 0 || rotateCounter == 4)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 0;
+
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 0;
+
+
+                        mark1.markPosY--;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 1;
+                    }
+                   else if(rotateCounter == 1)
+                   {
+                        int indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        mark1.markPosY--;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * (mark1.markPosY -1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                }
             }
             else if (move == 'w')
             {
-                int indexList = seaSize * mark1.markPosY + mark1.markPosX;
-                seaPoints[indexList].marked = 0;
+                if (shipTypeCounter == 0)
+                {
+                    int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                    seaPoints[indexList].marked = 0;
 
-                mark1.markPosX--;
-                indexList = seaSize * mark1.markPosY + mark1.markPosX;
-                seaPoints[indexList].marked = 1;
+                    mark1.markPosX--;
+                    indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                    seaPoints[indexList].marked = 1;
+                }
+                else if (shipTypeCounter == 1)
+                {
+                    if (rotateCounter == 0 || rotateCounter == 4)
+                    {
+                        if (shipTypeCounter == 1)
+                        {
+                            int indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                            seaPoints[indexList].marked = 0;
+
+                            indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                            seaPoints[indexList].marked = 1;
+                            mark1.markPosX--;
+                            indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                            seaPoints[indexList].marked = 1;
+                        }
+                    }
+                    else if (rotateCounter == 1)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosX--;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 2)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosX--;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;                        
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 3)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosX--;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                }
+                else if (shipTypeCounter == 2)
+                {
+                    if (rotateCounter == 0 || rotateCounter == 2)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosX--;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 1)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * (mark1.markPosY -1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosX--;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                }
             }
             else if (move == 'd')
             {
-                int indexList = seaSize * mark1.markPosY + mark1.markPosX;
-                seaPoints[indexList].marked = 0;
+                if (shipTypeCounter == 0)
+                {
+                    int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                    seaPoints[indexList].marked = 0;
 
-                mark1.markPosY++;
-                indexList = seaSize * mark1.markPosY + mark1.markPosX;
-                seaPoints[indexList].marked = 1;
+                    mark1.markPosY++;
+                    indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                    seaPoints[indexList].marked = 1;
+                }
+
+                else if (shipTypeCounter == 1)
+                {
+                    if (rotateCounter == 0 || rotateCounter == 4)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosY++;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 1)
+                    {
+                        int indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosY++;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 2)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosY++;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 3)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosY++;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;                        
+                        indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                }
+                else if (shipTypeCounter == 2)
+                {
+                    if (rotateCounter == 0 || rotateCounter == 2)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosY++;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 1)
+                    {
+                        int indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        mark1.markPosY++;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                }
             }
             else if (move == 's')
             {
-                int indexList = seaSize * mark1.markPosY + mark1.markPosX;
-                seaPoints[indexList].marked = 0;
 
-                mark1.markPosX++;
-                indexList = seaSize * mark1.markPosY + mark1.markPosX;
-                seaPoints[indexList].marked = 1;
+                if (shipTypeCounter == 0)
+                {
+                    int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                    seaPoints[indexList].marked = 0;
+
+                    mark1.markPosX++;
+                    indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                    seaPoints[indexList].marked = 1;
+                }
+                else if(shipTypeCounter == 1)
+                {
+                    if (rotateCounter == 0 || rotateCounter == 4)
+                    {
+                        if (shipTypeCounter == 1)
+                        {
+                            int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                            seaPoints[indexList].marked = 0;
+
+                            mark1.markPosX++;
+                            indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                            seaPoints[indexList].marked = 1;
+                            indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                            seaPoints[indexList].marked = 1;
+                        }
+                    }
+                    else if (rotateCounter == 1)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosX++;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 2)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 0;
+
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        mark1.markPosX++;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 3)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosX++;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                }
+                else if (shipTypeCounter == 2)
+                {
+                    if(rotateCounter == 0 || rotateCounter == 2)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosX++;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 1)
+                    {
+                        int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+
+                        mark1.markPosX++;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                }
+            }
+            else if (move == 'r')
+            {
+                if (shipTypeCounter == 1)
+                {                   
+                    rotateCounter++;
+                    int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                    seaPoints[indexList].marked = 1;
+
+                    indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                    seaPoints[indexList].marked = 0;
+
+                    if (rotateCounter == 1)
+                    {
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if(rotateCounter == 2)
+                    {
+                        indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 3)
+                    {
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * (mark1.markPosY +1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 4)
+                    {
+                        indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 1;
+                        rotateCounter = 0;
+                    }
+
+                }
+                else if (shipTypeCounter == 2)
+                {
+                    rotateCounter++;
+                    int indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                    seaPoints[indexList].marked = 1;
+
+                    indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                    seaPoints[indexList].marked = 0;
+
+                    if (rotateCounter == 1)
+                    {
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 0;
+
+                        indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                    }
+                    else if (rotateCounter == 2)
+                    {
+                        indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                        seaPoints[indexList].marked = 0;
+                        indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX ;
+                        seaPoints[indexList].marked = 0;
+
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 1;
+                        rotateCounter = 0;
+                    }
+                }
             }
             else if (move == (char)13)
             {
@@ -142,20 +578,103 @@ namespace LodeGame
 
                 if(seaPoints[indexList].state == State.Empty)
                 {
-                    Point point = seaPoints[indexList];
-                    point.state = State.Placed;                  
-                    seaPoints[indexList].marked = 1;
-                    seaPoints[indexList] = point;
+                    if(shipTypeCounter == 0)
+                    {
+                        seaPoints[indexList].state = State.Placed;
+                        seaPoints[indexList].marked = 0;
 
-                    //Ship submarine = new Ship();
-                    //submarine.position = indexList;
-                    EndGameCounter++;
+                        mark1.markPosX = 0;
+                        mark1.markPosY = 0;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 1;
+                        shipSizeCounter++;
+                    }               
+                    else if(shipTypeCounter == 1)
+                    {
+                        if (rotateCounter == 0 || rotateCounter == 4)
+                        {
+                            seaPoints[indexList].state = State.Placed;
+                            seaPoints[indexList].marked = 0;
+                            mark1.markPosX++;
+                            indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                            seaPoints[indexList].marked = 0;
+                            seaPoints[indexList].state = State.Placed;
+                        }        
+                        else if (rotateCounter == 1)
+                        {
+                            seaPoints[indexList].state = State.Placed;
+                            seaPoints[indexList].marked = 0;
+                            mark1.markPosY--;
+                            indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                            seaPoints[indexList].marked = 0;
+                            seaPoints[indexList].state = State.Placed;
+                        }
+                        else if (rotateCounter == 2)
+                        {
+                            seaPoints[indexList].state = State.Placed;
+                            seaPoints[indexList].marked = 0;
+                            mark1.markPosX--;
+                            indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                            seaPoints[indexList].marked = 0;
+                            seaPoints[indexList].state = State.Placed;
+                        }
+                        else if (rotateCounter == 3)
+                        {
+                            seaPoints[indexList].state = State.Placed;
+                            seaPoints[indexList].marked = 0;
+                            mark1.markPosY++;
+                            indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                            seaPoints[indexList].marked = 0;
+                            seaPoints[indexList].state = State.Placed;
+                        }
+                        mark1.markPosX = 1;
+                        mark1.markPosY = 0;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                        seaPoints[indexList].marked = 1;
+                        indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                        seaPoints[indexList].marked = 1;
+                        shipSizeCounter = shipSizeCounter + 2;
+                    }
+                    else if (shipTypeCounter == 2)
+                    {
+                        if(rotateCounter == 0 || rotateCounter == 2)
+                        {
+                            indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                            seaPoints[indexList].marked = 0;
+                            seaPoints[indexList].state = State.Placed;
+                            indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
+                            seaPoints[indexList].marked = 0;
+                            seaPoints[indexList].state = State.Placed;
+                            indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
+                            seaPoints[indexList].marked = 0;
+                            seaPoints[indexList].state = State.Placed;                           
+                        }
+                        else if (rotateCounter == 1)
+                        {
+                            indexList = seaSize * mark1.markPosY + mark1.markPosX;
+                            seaPoints[indexList].marked = 0;
+                            seaPoints[indexList].state = State.Placed;
+                            indexList = seaSize * (mark1.markPosY + 1) + mark1.markPosX;
+                            seaPoints[indexList].marked = 0;
+                            seaPoints[indexList].state = State.Placed;
+                            indexList = seaSize * (mark1.markPosY - 1) + mark1.markPosX;
+                            seaPoints[indexList].marked = 0;
+                            seaPoints[indexList].state = State.Placed;
+                        }
+                        shipSizeCounter = shipSizeCounter + 3;
+                    }
+                    shipTypeCounter++;                   
                     placeCounter++;
                     if (placeCounter == 3)
                     {
+                        rotateCounter = 0;
+                        shipTypeCounter = 0;
                         playerPlaced = false;
                         placeCounter = 0;
-                        seaPoints[indexList].marked = 0;
                         mark1.markPosX = 0;
                         mark1.markPosY = 0;
                         seaPoints[0].marked = 1;
@@ -239,7 +758,7 @@ namespace LodeGame
         }
 
         public void moveGame(char move)
-        {
+        {        
             if (move == 'a')
             {
                 int indexList = seaSize * mark1.markPosY + mark1.markPosX;
@@ -342,19 +861,19 @@ namespace LodeGame
             }
         }
 
-        public static void playerHasWon(){
-            Console.WriteLine(pl1Points);
-            Console.WriteLine(pl2Points);
-            if (pl1Points == EndGameCounter/2){     
-                //Console.Clear();
-                //Game = false;
-                //playerTurn = null;
+        public void playerHasWon(){
+            if (pl1Points == shipSizeCounter / 2){     
+                Console.Clear();
+                playerTurn = null;
                 Console.WriteLine("Congratulations! Player 1 has won the game.");
+                Console.WriteLine("");
+                Console.WriteLine("Do you want to battle ships one more time?");
+                Console.WriteLine("1) Yes");
+                Console.WriteLine("2) No");
             }
-            else if(pl2Points == EndGameCounter/2){
-                //Console.Clear();
-                //Game = false;
-                //playerTurn = null;
+            else if(pl2Points == shipSizeCounter / 2){
+                Console.Clear();
+                playerTurn = null;
                 Console.WriteLine("Congratulations! Player 2 has won the game.");
             }          
         }
