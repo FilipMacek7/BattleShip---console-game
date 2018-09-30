@@ -575,10 +575,13 @@ namespace LodeGame
             else if (move == (char)13)
             {
                 int indexList = seaSize * mark1.markPosY + mark1.markPosX;
-
-                if(seaPoints[indexList].state == State.Empty)
+                int indexListU = indexList - 10;
+                int indexListL = indexList - 1;
+                int indexListR = indexList + 1;
+                int indexListD = indexList + 10;
+                if (seaPoints[indexList].state == State.Empty)
                 {
-                    if(shipTypeCounter == 0)
+                    if (shipTypeCounter == 0)
                     {
                         seaPoints[indexList].state = State.Placed;
                         seaPoints[indexList].marked = 0;
@@ -590,8 +593,8 @@ namespace LodeGame
                         indexList = seaSize * mark1.markPosY + mark1.markPosX + 1;
                         seaPoints[indexList].marked = 1;
                         shipSizeCounter++;
-                    }               
-                    else if(shipTypeCounter == 1)
+                    }
+                    else if (shipTypeCounter == 1)
                     {
                         if (rotateCounter == 0 || rotateCounter == 4)
                         {
@@ -601,7 +604,7 @@ namespace LodeGame
                             indexList = seaSize * mark1.markPosY + mark1.markPosX;
                             seaPoints[indexList].marked = 0;
                             seaPoints[indexList].state = State.Placed;
-                        }        
+                        }
                         else if (rotateCounter == 1)
                         {
                             seaPoints[indexList].state = State.Placed;
@@ -641,7 +644,7 @@ namespace LodeGame
                     }
                     else if (shipTypeCounter == 2)
                     {
-                        if(rotateCounter == 0 || rotateCounter == 2)
+                        if (rotateCounter == 0 || rotateCounter == 2)
                         {
                             indexList = seaSize * mark1.markPosY + mark1.markPosX;
                             seaPoints[indexList].marked = 0;
@@ -651,7 +654,7 @@ namespace LodeGame
                             seaPoints[indexList].state = State.Placed;
                             indexList = seaSize * mark1.markPosY + mark1.markPosX - 1;
                             seaPoints[indexList].marked = 0;
-                            seaPoints[indexList].state = State.Placed;                           
+                            seaPoints[indexList].state = State.Placed;
                         }
                         else if (rotateCounter == 1)
                         {
@@ -667,7 +670,7 @@ namespace LodeGame
                         }
                         shipSizeCounter = shipSizeCounter + 3;
                     }
-                    shipTypeCounter++;                   
+                    shipTypeCounter++;
                     placeCounter++;
                     if (placeCounter == 3)
                     {
@@ -679,7 +682,11 @@ namespace LodeGame
                         mark1.markPosY = 0;
                         seaPoints[0].marked = 1;
                     }
-                }               
+                }
+                else
+                {
+                    Console.WriteLine("You can't place ship there. Give ships some space.");
+                }
             }
         }
         public void displayGameSea()

@@ -36,7 +36,8 @@ namespace LodeGame
                             seapl1.createSea();
                             seapl1.displaySea();
                             Console.WriteLine("");
-                            Console.WriteLine("Press ENTER to deploy one-block Submarine Player 1.");
+                            Console.WriteLine("Press ENTER to deploy ships");
+                            Console.WriteLine("Press R to rotate ships");
                             Console.WriteLine("");
                             while (pl1placing)
                             {
@@ -71,7 +72,8 @@ namespace LodeGame
                             seapl2.createSea();
                             seapl2.displaySea();
                             Console.WriteLine("");
-                            Console.WriteLine("Press ENTER to deploy one-block Submarine Player 2.");
+                            Console.WriteLine("Press ENTER to deploy ships");
+                            Console.WriteLine("Press R to rotate ships");
                             Console.WriteLine("");
                             seapl2.playerPlaced = true;
                             while (pl2placing)
