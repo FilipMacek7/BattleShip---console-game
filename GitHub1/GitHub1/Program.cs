@@ -21,7 +21,8 @@ namespace LodeGame
 
             bool Semafor = true;
             bool pl1placing = true;
-            bool pl2placing = true;            
+            bool pl2placing = true;
+            bool pl3placing = true;
             while (Semafor)
             {
                 menu();
@@ -103,29 +104,116 @@ namespace LodeGame
                                     Console.WriteLine("Select one more time.");
                                 }
                             }
+                            Console.Clear();
+                            Sea seapl3 = new Sea();
+                            seapl3.createSea();
+                            seapl3.displaySea();
+                            Console.WriteLine("");
+                            Console.WriteLine("Press ENTER to deploy ships");
+                            Console.WriteLine("Press R to rotate ships");
+                            Console.WriteLine("");
+                            seapl3.playerPlaced = true;
+                            while (pl3placing)
+                            {
+                                while (seapl3.playerPlaced == true)
+                                {
+                                    ConsoleKeyInfo input = Console.ReadKey();
+                                    char move = input.KeyChar;
+                                    seapl3.moveShips(move);
+                                    Console.Clear();
+                                    seapl3.displaySea();
+                                }
+                                Console.WriteLine("Player 3 do you want to set ships on these positions?");
+                                Console.WriteLine("1) Yes");
+                                Console.WriteLine("2) No");
+                                ConsoleKeyInfo choice = Console.ReadKey();
+                                if (choice.KeyChar == '1')
+                                {
+                                    pl3placing = false;
+                                }
+                                else if (choice.KeyChar == '2')
+                                {
+                                    seapl3.playerPlaced = true;
+                                    seapl3.clearSea();
+                                    Console.Clear();
+                                    seapl3.displaySea();
+                                    Console.WriteLine("Select one more time.");
+                                }
+                            }
 
                             while (true)
                             {                                          
-                                while (Sea.playerTurn == true)
-                                {
-                                    Console.Clear();
-                                    seapl2.displayGameSea();
-                                    Console.WriteLine("Player 1's turn. ");
-                                    ConsoleKeyInfo input = Console.ReadKey();
-                                    char move = input.KeyChar;
-                                    seapl2.moveGame(move);
-                                    seapl1.playerHasWon();
-
+                                while (Sea.playerTurn == 1)
+                                {                                    
+                                    if (Sea.shootTurn == true)
+                                    {
+                                        Console.Clear();
+                                        seapl2.displayGameSea();
+                                        Console.WriteLine("Player 1's turn. ");
+                                        Console.WriteLine("You are shooting on Player 2. ");
+                                        ConsoleKeyInfo input = Console.ReadKey();
+                                        char move = input.KeyChar;
+                                        seapl2.moveGame(move);
+                                    }
+                                   else if (Sea.shootTurn == false)
+                                    {
+                                        Console.Clear();
+                                        seapl3.displayGameSea();
+                                        Console.WriteLine("Player 1's turn. ");
+                                        Console.WriteLine("You are shooting on Player 3. ");
+                                        ConsoleKeyInfo input = Console.ReadKey();
+                                        char move = input.KeyChar;
+                                        seapl3.moveGame(move);                                      
+                                    }
+                                    Sea.playerHasWon();
                                 }                               
-                                while (Sea.playerTurn == false)
+                                while (Sea.playerTurn == 2)
                                 {
-                                    Console.Clear();
-                                    seapl1.displayGameSea();
-                                    Console.WriteLine("Player 2's turn. ");
-                                    ConsoleKeyInfo input = Console.ReadKey();
-                                    char move = input.KeyChar;
-                                    seapl1.moveGame(move);
-                                    seapl2.playerHasWon();
+                                    if (Sea.shootTurn == true)
+                                    {
+                                        Console.Clear();
+                                        seapl1.displayGameSea();
+                                        Console.WriteLine("Player 2's turn. ");
+                                        Console.WriteLine("You are shooting on Player 1. ");
+                                        ConsoleKeyInfo input = Console.ReadKey();
+                                        char move = input.KeyChar;
+                                        seapl1.moveGame(move);
+                                    }
+                                    else if (Sea.shootTurn == false)
+                                    {
+                                        Console.Clear();
+                                        seapl3.displayGameSea();
+                                        Console.WriteLine("Player 2's turn. ");
+                                        Console.WriteLine("You are shooting on Player 3. ");
+                                        ConsoleKeyInfo input = Console.ReadKey();
+                                        char move = input.KeyChar;
+                                        seapl3.moveGame(move);
+                                    }
+                                    Sea.playerHasWon();
+                                }
+                                while (Sea.playerTurn == 3)
+                                {
+                                    if (Sea.shootTurn == true)
+                                    {
+                                        Console.Clear();
+                                        seapl1.displayGameSea();
+                                        Console.WriteLine("Player 3's turn. ");
+                                        Console.WriteLine("You are shooting on Player 1. ");
+                                        ConsoleKeyInfo input = Console.ReadKey();
+                                        char move = input.KeyChar;
+                                        seapl1.moveGame(move);
+                                    }
+                                    else if (Sea.shootTurn == false)
+                                    {
+                                        Console.Clear();
+                                        seapl2.displayGameSea();
+                                        Console.WriteLine("Player 1's turn. ");
+                                        Console.WriteLine("You are shooting on Player 2. ");
+                                        ConsoleKeyInfo input = Console.ReadKey();
+                                        char move = input.KeyChar;
+                                        seapl2.moveGame(move);
+                                    }
+                                    Sea.playerHasWon();
                                 }
                             }
 
